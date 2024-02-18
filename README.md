@@ -27,14 +27,18 @@ and add all of these in your .env file. Also the same variables in the cloudflar
 
 You will need to checkout
 
-```ts
-    "updater": {
-      "active": true,
-      "dialog": false,
-      "pubkey": "YOUR_PUBKEY",
-      "endpoints": ["https://YOUR_CLOUDFLARE_DEPLOYED_URl/api/check_update"]
-    },
+```json
+"updater": {
+    "active": true,
+    "dialog": false,
+    "pubkey": "YOUR_PUBKEY",
+    "endpoints": ["https://YOUR_CLOUDFLARE_DEPLOYED_URl/api/check_update"]
+},
 ```
 
 in tauri.conf.json and add your pubkey, the deployed url of your cloudflare worker, and a private key.
 The actual Tauri Docs are amazing for this: https://tauri.app/v1/guides/distribution/updater/
+
+#### How to push updates
+
+So pushing an update to your app is as simple as pushing a new tag to your repo. The updater server will check for new tags and the Tauri app will check the updater server for new updates. So whenever you push a tag after a commit, the github action will build the app and make a new release. The Updater server will check for new tags and the Tauri app will check the updater server for new updates. If there is a new update, the Tauri app will download the new version and replace the old one.
